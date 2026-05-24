@@ -203,6 +203,71 @@
         .features-list li { font-size: 13px; margin-bottom: 6px; padding-left: 20px; position: relative; }
         .features-list li::before { content: "✓"; position: absolute; left: 0; color: var(--accent-green); font-weight: bold; }
 
+        /* --- СЕКЦИЯ ДАШБОРД (СКРИТА ПО ПОДРАЗБИРАНЕ) --- */
+        .dashboard-section {
+            display: none;
+            background-color: #F8FAFC;
+            padding: 50px 0;
+            border-top: 2px solid var(--accent-green);
+        }
+        .db-card {
+            background: #FFFFFF;
+            border-radius: 8px;
+            padding: 20px;
+            border: 1px solid var(--border-color);
+            box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.05);
+            margin-bottom: 25px;
+        }
+        .db-header-panel {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 20px;
+        }
+        .user-badge {
+            background-color: #E2E8F0;
+            padding: 6px 12px;
+            border-radius: 20px;
+            font-size: 13px;
+            font-weight: 600;
+        }
+        .db-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+            gap: 15px;
+            margin-bottom: 25px;
+        }
+        .db-mini-card {
+            background: #F1F5F9;
+            padding: 15px;
+            border-radius: 6px;
+            text-align: center;
+        }
+        .db-mini-card h4 { font-size: 15px; color: var(--bg-dark); margin-bottom: 5px; }
+        .db-mini-card p { font-size: 12px; color: var(--text-muted); }
+        
+        /* Таблица със задачи в Дашборда */
+        .db-table {
+            width: 100%;
+            border-collapse: collapse;
+            margin-top: 15px;
+            font-size: 13px;
+        }
+        .db-table th, .db-table td {
+            padding: 10px;
+            text-align: left;
+            border-bottom: 1px solid var(--border-color);
+        }
+        .db-table th { background-color: #F8FAFC; color: var(--bg-dark); }
+        .status-pill {
+            padding: 2px 8px;
+            border-radius: 12px;
+            font-size: 11px;
+            font-weight: 600;
+        }
+        .status-active { background-color: #DDBEFE; color: #6B21A8; }
+        .status-done { background-color: #DCFCE7; color: #166534; }
+
         .pricing { background-color: #F8FAFC; padding: 60px 0; border-top: 1px solid var(--border-color); }
         .pricing-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(260px, 1fr)); gap: 20px; max-width: 1000px; margin: 0 auto; }
         .price-card { background: #FFFFFF; border: 1px solid var(--border-color); border-radius: 10px; padding: 25px; text-align: center; position: relative; }
@@ -277,6 +342,62 @@
         </div>
     </section>
 
+    <section class="dashboard-section" id="intellectaDashboard">
+        <div class="container">
+            <div class="db-header-panel">
+                <h2 style="color: var(--bg-dark); font-weight: 700;">Табло за управление Intellecta</h2>
+                <div class="user-badge" id="dbUserBadge">Профил: Фирма партньор</div>
+            </div>
+
+            <div class="db-grid">
+                <div class="db-mini-card" style="border-left: 4px solid var(--accent-green);">
+                    <h4>AI Одит на договори</h4>
+                    <p>Статус: Активен модул</p>
+                </div>
+                <div class="db-mini-card" style="border-left: 4px solid #3B82F6;">
+                    <h4>PostgreSQL интеграция</h4>
+                    <p>Статус: Синхронизирана</p>
+                </div>
+                <div class="db-mini-card" style="border-left: 4px solid #F59E0B;">
+                    <h4>Финансови отчети</h4>
+                    <p>Достъп: Пълен лиценз (€)</p>
+                </div>
+            </div>
+
+            <div class="db-card">
+                <h3 style="font-size: 16px; margin-bottom: 10px; color: var(--bg-dark);">Наблюдавани фирмени операции</h3>
+                <p style="font-size: 13px; color: var(--text-muted);">Автоматизирано проследяване на бизнес задачи и валидация на документи.</p>
+                
+                <table class="db-table">
+                    <thead>
+                        <tr>
+                            <th>Операция / Проект</th>
+                            <th>Тип зашита</th>
+                            <th>Статус на софтуера</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr>
+                            <td><strong>Преглед на нови договори за обекти</strong></td>
+                            <td>AI Правен скенер</td>
+                            <td><span class="status-pill status-active">В процес на анализ</span></td>
+                        </tr>
+                        <tr>
+                            <td><strong>Верификация на транзакции и IBAN</strong></td>
+                            <td>Анти-Скамер защита</td>
+                            <td><span class="status-pill status-done">Завършена (Одобрен)</span></td>
+                        </tr>
+                        <tr>
+                            <td><strong>Архивиране на клиентски профили</strong></td>
+                            <td>Криптирана DB</td>
+                            <td><span class="status-pill status-done">Синхронизирано</span></td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+        </div>
+    </section>
+
     <section class="services">
         <div class="container">
             <h2 class="section-title">Нашите Интелигентни Услуги</h2>
@@ -326,8 +447,8 @@
                 <h3>Вход в Intellecta</h3>
                 <p class="modal-subtitle">Въведете данните си за достъп до платформата</p>
                 <form id="loginForm">
-                    <input type="email" placeholder="Имейл адрес" required>
-                    <input type="password" placeholder="Парола" required>
+                    <input type="email" placeholder="Имейл адрес" value="lifeweaverlifeweaver@gmail.com" required>
+                    <input type="password" placeholder="Парола" value="12345678" required>
                     <button type="submit" class="btn" style="width: 100%; margin-top: 10px;">Влез</button>
                 </form>
                 <div class="switch-form-text">
@@ -339,8 +460,8 @@
                 <h3>Нова регистрация</h3>
                 <p class="modal-subtitle">Създайте профил на вашата фирма, за да стартирате</p>
                 <form id="registerForm">
-                    <input type="text" placeholder="Име на фирмата" required>
-                    <input type="email" placeholder="Имейл адрес" required>
+                    <input type="text" id="regCompanyName" placeholder="Име на фирмата" value="КЛИЙН-ХОУМ ЕООД" required>
+                    <input type="email" id="regEmail" placeholder="Имейл адрес" value="lifeweaverlifeweaver@gmail.com" required>
                     <input type="password" placeholder="Парола" required>
                     <button type="submit" class="btn" style="width: 100%; margin-top: 10px;">Създай безплатен акаунт</button>
                 </form>
@@ -359,7 +480,6 @@
     </footer>
 
     <script>
-        // Инициализиране на елементите
         const modal = document.getElementById('authModal');
         const openLoginBtn = document.getElementById('openLoginBtn');
         const closeModalBtn = document.getElementById('closeModalBtn');
@@ -375,11 +495,122 @@
         const linkToLogin = document.getElementById('linkToLogin');
         const priceBtnStart = document.getElementById('priceBtnStart');
         const priceBtnBusiness = document.getElementById('priceBtnBusiness');
+        
+        // Дашборд елементи
+        const dashboardSection = document.getElementById('intellectaDashboard');
+        const dbUserBadge = document.getElementById('dbUserBadge');
 
-        // Функции за превключване
         function showLogin() {
-            registerBlock.style.with = 'none';
             registerBlock.style.display = 'none';
             successToast.style.display = 'none';
             loginBlock.style.display = 'block';
         }
+
+        function showRegister() {
+            loginBlock.style.display = 'none';
+            successToast.style.display = 'none';
+            registerBlock.style.display = 'block';
+        }
+
+        openLoginBtn.addEventListener('click', function() {
+            showLogin();
+            modal.style.display = 'flex';
+        });
+
+        priceBtnStart.addEventListener('click', function() {
+            showRegister();
+            modal.style.display = 'flex';
+        });
+
+        priceBtnBusiness.addEventListener('click', function() {
+            showRegister();
+            modal.style.display = 'flex';
+        });
+
+        linkToRegister.addEventListener('click', showRegister);
+        linkToLogin.addEventListener('click', showLogin);
+
+        closeModalBtn.addEventListener('click', function() { modal.style.display = 'none'; });
+        window.addEventListener('click', function(e) { if (e.target === modal) modal.style.display = 'none'; });
+
+        // Обработка при вход / регистрация -> ОТКЛЮЧВАНЕ НА ДАШБОРД
+        loginForm.addEventListener('submit', function(e) {
+            e.preventDefault();
+            loginBlock.style.display = 'none';
+            successToast.innerText = "Успешен вход! Стартиране на защитена потребителска сесия...";
+            successToast.style.display = 'block';
+            
+            // Задаваме името по подразбиране, ако влиза директно
+            dbUserBadge.innerText = "Клиент: КЛИЙН-ХОУМ ЕООД";
+            
+            setTimeout(unlockDashboard, 1800);
+        });
+
+        registerForm.addEventListener('submit', function(e) {
+            e.preventDefault();
+            const companyName = document.getElementById('regCompanyName').value || "КЛИЙН-ХОУМ ЕООД";
+            registerBlock.style.display = 'none';
+            successToast.innerText = "Регистрацията е успешна! Профилът ви е записан в базата.";
+            successToast.style.display = 'block';
+            
+            // Динамично обновяваме логото/името на фирмата в дашборда
+            dbUserBadge.innerText = "Клиент: " + companyName;
+            
+            setTimeout(unlockDashboard, 1800);
+        });
+
+        function unlockDashboard() {
+            modal.style.display = 'none';
+            successToast.style.display = 'none';
+            
+            // Отключваме визуалния панел
+            dashboardSection.style.display = 'block';
+            
+            // Променяме текста на главния бутон горе за статус
+            openLoginBtn.innerText = "Активна сесия";
+            openLoginBtn.style.backgroundColor = "#10B981";
+            
+            // Плавно скролване до новопоявилия се Дашборд
+            dashboardSection.scrollIntoView({ behavior: 'smooth' });
+        }
+
+        // Логика за PDF Скенер
+        const dropzone = document.getElementById('dropzone');
+        const fileInput = document.getElementById('fileInput');
+        const dropzoneText = document.getElementById('dropzoneText');
+        const dropzoneSubtext = document.getElementById('dropzoneSubtext');
+        const resultBox = document.getElementById('resultBox');
+        const resFileName = document.getElementById('resFileName');
+
+        dropzone.addEventListener('click', function() { fileInput.click(); });
+        dropzone.addEventListener('dragover', function(e) { e.preventDefault(); dropzone.classList.add('dragover'); });
+        dropzone.addEventListener('dragleave', function() { dropzone.classList.remove('dragover'); });
+        dropzone.addEventListener('drop', function(e) {
+            e.preventDefault();
+            dropzone.classList.remove('dragover');
+            if(e.dataTransfer.files.length > 0) handleFile(e.dataTransfer.files[0]);
+        });
+        fileInput.addEventListener('change', function(e) {
+            if(e.target.files.length > 0) handleFile(e.target.files[0]);
+        });
+
+        function handleFile(file) {
+            if (file.type !== "application/pdf") {
+                alert("Моля, качете валиден PDF документ.");
+                return;
+            }
+            dropzoneText.innerText = "Сканиране и AI анализ на документа...";
+            dropzoneSubtext.innerText = "Моля, изчакайте 3 секунди...";
+            resultBox.style.display = 'none';
+
+            setTimeout(function() {
+                dropzoneText.innerText = "Анализът приключи успешно!";
+                dropzoneSubtext.innerText = "Можете да качите нов файл по всяко време.";
+                resFileName.innerText = file.name;
+                resultBox.style.display = 'block';
+                resultBox.scrollIntoView({ behavior: 'smooth' });
+            }, 3000);
+        }
+    </script>
+</body>
+</html>
