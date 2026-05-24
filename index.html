@@ -72,7 +72,7 @@
         }
 
         .hero h1 {
-            font-size: 36px;
+            font-size: 34px;
             font-weight: 700;
             color: var(--bg-dark);
             margin-bottom: 20px;
@@ -144,7 +144,7 @@
             line-height: 1;
         }
 
-        .modal-content h3 { margin-bottom: 10px; color: var(--bg-dark); }
+        .modal-content h3 { margin-bottom: 5px; color: var(--bg-dark); }
         .modal-subtitle { font-size: 13px; color: var(--text-muted); margin-bottom: 20px; }
         
         .modal-content input {
@@ -320,22 +320,35 @@
         <div class="modal-content">
             <span class="close-modal" id="closeModalBtn">&times;</span>
             
-            <h3 id="formTitle">Вход в Intellecta</h3>
-            <p class="modal-subtitle" id="formSubtitle">Въведете данните си за достъп до платформата</p>
-            
             <div class="success-toast" id="successToast"></div>
             
-            <form id="authForm" onsubmit="handleFormSubmit(event)">
-                <input type="text" id="companyField" placeholder="Име на фирмата" style="display: none;">
-                <input type="email" placeholder="Имейл адрес" required>
-                <input type="password" placeholder="Парола" required>
-                
-                <button type="submit" class="btn" style="width: 100%; margin-top: 10px;" id="submitFormBtn">Влез</button>
-            </form>
-            
-            <div class="switch-form-text" id="switchPrompt">
-                Нямате профил? <span class="switch-form-link" id="switchLink">Регистрирайте се тук</span>
+            <div id="loginFormBlock">
+                <h3>Вход в Intellecta</h3>
+                <p class="modal-subtitle">Въведете данните си за достъп до платформата</p>
+                <form onsubmit="handleFormSubmit(event, 'login')">
+                    <input type="email" placeholder="Имейл адрес" required>
+                    <input type="password" placeholder="Парола" required>
+                    <button type="submit" class="btn" style="width: 100%; margin-top: 10px;">Влез</button>
+                </form>
+                <div class="switch-form-text">
+                    Нямате профил? <span class="switch-form-link" onclick="showRegisterBlock()">Регистрирайте се тук</span>
+                </div>
             </div>
+
+            <div id="registerFormBlock" style="display: none;">
+                <h3>Нова регистрация</h3>
+                <p class="modal-subtitle">Създайте профил на вашата фирма, за да стартирате</p>
+                <form onsubmit="handleFormSubmit(event, 'register')">
+                    <input type="text" placeholder="Име на фирмата" required>
+                    <input type="email" placeholder="Имейл адрес" required>
+                    <input type="password" placeholder="Парола" required>
+                    <button type="submit" class="btn" style="width: 100%; margin-top: 10px;">Създай безплатен акаунт</button>
+                </form>
+                <div class="switch-form-text">
+                    Вече имате профил? <span class="switch-form-link" onclick="showLoginBlock()">Влезте оттук</span>
+                </div>
+            </div>
+
         </div>
     </div>
 
@@ -350,74 +363,54 @@
         const openLoginBtn = document.getElementById('openLoginBtn');
         const closeModalBtn = document.getElementById('closeModalBtn');
         
-        const formTitle = document.getElementById('formTitle');
-        const formSubtitle = document.getElementById('formSubtitle');
-        const companyField = document.getElementById('companyField');
-        const submitFormBtn = document.getElementById('submitFormBtn');
-        const switchLink = document.getElementById('switchLink');
-        const switchPrompt = document.getElementById('switchPrompt');
+        const loginBlock = document.getElementById('loginFormBlock');
+        const registerBlock = document.getElementById('registerFormBlock');
         const successToast = document.getElementById('successToast');
-        const authForm = document.getElementById('authForm');
 
-        let isCurrentRegister = false;
-
-        function switchToLogin() {
-            isCurrentRegister = false;
-            formTitle.innerText = "Вход в Intellecta";
-            formSubtitle.innerText = "Въведете данните си за достъп до платформата";
-            companyField.style.display = "none";
-            companyField.removeAttribute("required");
-            submitFormBtn.innerText = "Влез";
-            switchPrompt.innerHTML = 'Нямате профил? <span class="switch-form-link" id="toRegLink">Регистрирайте се тук</span>';
-            document.getElementById('toRegLink').onclick = switchToRegister;
+        function showLoginBlock() {
+            registerBlock.style.display = 'none';
+            successToast.style.display = 'none';
+            loginBlock.style.display = 'block';
         }
 
-        function switchToRegister() {
-            isCurrentRegister = true;
-            formTitle.innerText = "Нова регистрация";
-            formSubtitle.innerText = "Създайте профил на вашата фирма, за да стартирате";
-            companyField.style.display = "block";
-            companyField.setAttribute("required", "true");
-            submitFormBtn.innerText = "Създай безплатен акаунт";
-            switchPrompt.innerHTML = 'Вече имате профил? <span class="switch-form-link" id="toLogLink">Влезте оттук</span>';
-            document.getElementById('toLogLink').onclick = switchToLogin;
+        function showRegisterBlock() {
+            loginBlock.style.display = 'none';
+            successToast.style.display = 'none';
+            registerBlock.style.display = 'block';
         }
 
-        // Обработка на изпращането БЕЗ системни алерти
-        function handleFormSubmit(event) {
+        // Изпращане без alert()
+        function handleFormSubmit(event, type) {
             event.preventDefault();
             
-            // Скриваме формата временно
-            authForm.style.display = 'none';
+            loginBlock.style.display = 'none';
+            registerBlock.style.display = 'none';
             successToast.style.display = 'block';
             
-            if (isCurrentRegister) {
+            if (type === 'register') {
                 successToast.innerText = "Регистрацията е успешна! Профилът ви е създаден в PostgreSQL базата.";
             } else {
                 successToast.innerText = "Успешен вход в системата! Стартиране на защитена потребителска сесия.";
             }
 
-            // Автоматично затваряне на прозореца след 2 секунди
             setTimeout(() => {
                 modal.style.display = 'none';
-                // Възстановяваме формата за следващ тест
-                authForm.style.display = 'block';
                 successToast.style.display = 'none';
-                authForm.reset();
-            }, 2300);
+                showLoginBlock(); // Нулираме към вход за следващ тест
+                event.target.reset();
+            }, 2500);
         }
 
         openLoginBtn.onclick = function() {
-            switchToLogin();
+            showLoginBlock();
             modal.style.display = 'flex';
         };
 
         function openWithRegister() {
-            switchToRegister();
+            showRegisterBlock();
             modal.style.display = 'flex';
         }
 
-        switchLink.onclick = switchToRegister;
         closeModalBtn.onclick = function() { modal.style.display = 'none'; };
         window.onclick = function(e) { if(e.target === modal) modal.style.display = 'none'; };
 
@@ -452,4 +445,13 @@
 
             setTimeout(function() {
                 dropzoneText.innerText = "Анализът приключи успешно!";
-       
+                dropzoneSubtext.innerText = "Можете да качите нов файл по всяко време.";
+                resFileName.innerText = file.name;
+                resultBox.style.display = 'block';
+                resultBox.scrollIntoView({ behavior: 'smooth' });
+            }, 3000);
+        }
+    </script>
+</body>
+                        </html>
+    
