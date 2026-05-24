@@ -169,7 +169,7 @@
             border: 1px solid #BBF7D0;
         }
 
-        /* Резултати */
+        /* Резултати от първия скенер */
         .result-box {
             display: none;
             background: white;
@@ -193,17 +193,7 @@
 
         .badge-risk { background: #EF4444; color: white; padding: 4px 10px; border-radius: 4px; font-size: 12px; font-weight: 600; }
 
-        .services { padding: 60px 0; }
-        .section-title { text-align: center; font-size: 28px; color: var(--bg-dark); margin-bottom: 40px; font-weight: 700; }
-        .grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(300px, 1fr)); gap: 25px; }
-        .card { background: #FFFFFF; border: 1px solid var(--border-color); border-radius: 10px; padding: 25px; }
-        .card h3 { font-size: 18px; color: var(--bg-dark); margin-bottom: 12px; }
-        .card p { color: var(--text-muted); font-size: 14px; margin-bottom: 15px; }
-        .features-list { list-style: none; }
-        .features-list li { font-size: 13px; margin-bottom: 6px; padding-left: 20px; position: relative; }
-        .features-list li::before { content: "✓"; position: absolute; left: 0; color: var(--accent-green); font-weight: bold; }
-
-        /* --- СЕКЦИЯ ДАШБОРД (СКРИТА ПО ПОДРАЗБИРАНЕ) --- */
+        /* --- СЕКЦИЯ ДАШБОРД --- */
         .dashboard-section {
             display: none;
             background-color: #F8FAFC;
@@ -237,15 +227,37 @@
             gap: 15px;
             margin-bottom: 25px;
         }
+        
+        /* Кликаеми големи карти в Дашборда */
         .db-mini-card {
-            background: #F1F5F9;
-            padding: 15px;
-            border-radius: 6px;
-            text-align: center;
+            background: #FFFFFF;
+            padding: 20px;
+            border-radius: 8px;
+            text-align: left;
+            border: 1px solid var(--border-color);
+            cursor: pointer;
+            transition: all 0.2s ease;
+            box-shadow: 0 2px 4px rgba(0,0,0,0.02);
         }
-        .db-mini-card h4 { font-size: 15px; color: var(--bg-dark); margin-bottom: 5px; }
+        .db-mini-card:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 6px 12px rgba(0,0,0,0.05);
+        }
+        .db-mini-card h4 { font-size: 15px; color: var(--bg-dark); margin-bottom: 5px; font-weight: 600; }
         .db-mini-card p { font-size: 12px; color: var(--text-muted); }
         
+        /* Интерактивни под-панели за съдържание */
+        .module-content-panel {
+            display: none;
+            background: #FFFFFF;
+            border: 1px solid var(--border-color);
+            border-radius: 8px;
+            padding: 20px;
+            margin-bottom: 25px;
+            animation: fadeIn 0.3s ease;
+        }
+        @keyframes fadeIn { from { opacity: 0; transform: translateY(5px); } to { opacity: 1; transform: translateY(0); } }
+
         /* Таблица със задачи в Дашборда */
         .db-table {
             width: 100%;
@@ -254,19 +266,29 @@
             font-size: 13px;
         }
         .db-table th, .db-table td {
-            padding: 10px;
+            padding: 12px 10px;
             text-align: left;
             border-bottom: 1px solid var(--border-color);
         }
-        .db-table th { background-color: #F8FAFC; color: var(--bg-dark); }
+        .db-table th { background-color: #F8FAFC; color: var(--bg-dark); font-weight: 600; }
         .status-pill {
             padding: 2px 8px;
             border-radius: 12px;
             font-size: 11px;
             font-weight: 600;
         }
-        .status-active { background-color: #DDBEFE; color: #6B21A8; }
+        .status-active { background-color: #E9D5FF; color: #6B21A8; }
         .status-done { background-color: #DCFCE7; color: #166534; }
+
+        .services { padding: 60px 0; }
+        .section-title { text-align: center; font-size: 28px; color: var(--bg-dark); margin-bottom: 40px; font-weight: 700; }
+        .grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(300px, 1fr)); gap: 25px; }
+        .card { background: #FFFFFF; border: 1px solid var(--border-color); border-radius: 10px; padding: 25px; }
+        .card h3 { font-size: 18px; color: var(--bg-dark); margin-bottom: 12px; }
+        .card p { color: var(--text-muted); font-size: 14px; margin-bottom: 15px; }
+        .features-list { list-style: none; }
+        .features-list li { font-size: 13px; margin-bottom: 6px; padding-left: 20px; position: relative; }
+        .features-list li::before { content: "✓"; position: absolute; left: 0; color: var(--accent-green); font-weight: bold; }
 
         .pricing { background-color: #F8FAFC; padding: 60px 0; border-top: 1px solid var(--border-color); }
         .pricing-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(260px, 1fr)); gap: 20px; max-width: 1000px; margin: 0 auto; }
@@ -349,18 +371,52 @@
                 <div class="user-badge" id="dbUserBadge">Профил: Фирма партньор</div>
             </div>
 
+            <p style="font-size: 13px; color: var(--text-muted); margin-bottom: 10px;">Кликнете върху някой модул, за да го стартирате:</p>
             <div class="db-grid">
-                <div class="db-mini-card" style="border-left: 4px solid var(--accent-green);">
+                <div class="db-mini-card" id="modContractBtn" style="border-left: 4px solid var(--accent-green);">
                     <h4>AI Одит на договори</h4>
-                    <p>Статус: Активен модул</p>
+                    <p>Статус: <strong>Кликнете за старт</strong></p>
                 </div>
-                <div class="db-mini-card" style="border-left: 4px solid #3B82F6;">
+                <div class="db-mini-card" id="modDbBtn" style="border-left: 4px solid #3B82F6;">
                     <h4>PostgreSQL интеграция</h4>
-                    <p>Статус: Синхронизирана</p>
+                    <p>Статус: <strong>Преглед на таблици</strong></p>
                 </div>
-                <div class="db-mini-card" style="border-left: 4px solid #F59E0B;">
+                <div class="db-mini-card" id="modFinanceBtn" style="border-left: 4px solid #F59E0B;">
                     <h4>Финансови отчети</h4>
-                    <p>Достъп: Пълен лиценз (€)</p>
+                    <p>Достъп: <strong>Виж разходи (€)</strong></p>
+                </div>
+            </div>
+
+            <div class="module-content-panel" id="panelContract">
+                <h3 style="font-size: 16px; color: var(--bg-dark); margin-bottom: 10px;">Инструмент: AI Правен одит</h3>
+                <p style="font-size: 13px; margin-bottom: 15px;">Модулът работи в режим на готовност. Можете да пуснете договор директно в главното поле на сайта за дълбоко сканиране на скрити клаузи.</p>
+                <div style="background: #F8FAFC; padding: 12px; border-radius: 6px; font-size: 12px; border-left: 3px solid var(--accent-green);">
+                    <strong>Последна операция:</strong> Проверен договор за отдаване на техника под наем. Риск: Нисък.
+                </div>
+            </div>
+
+            <div class="module-content-panel" id="panelDb">
+                <h3 style="font-size: 16px; color: var(--bg-dark); margin-bottom: 10px;">База данни: PostgreSQL Статистика</h3>
+                <p style="font-size: 13px; margin-bottom: 15px;">Всички данни от уеб формите, клиентите и заявките се записват автоматично в реално време.</p>
+                <div style="background: #0F172A; color: #10B981; font-family: monospace; padding: 12px; border-radius: 6px; font-size: 11px; overflow-x: auto;">
+                    postgres=# SELECT * FROM companies_subscribers;<br>
+                    1 | КЛИЙН-ХОУМ ЕООД | active_license | varna_region<br>
+                    postgres=# Connection status: Secure SSL (Encrypted)
+                </div>
+            </div>
+
+            <div class="module-content-panel" id="panelFinance">
+                <h3 style="font-size: 16px; color: var(--bg-dark); margin-bottom: 10px;">Финансово табло (€)</h3>
+                <p style="font-size: 13px; margin-bottom: 15px;">Автоматично калкулиране на спестените разходи благодарение на оптимизацията на процесите от Intellecta.</p>
+                <div style="display: flex; gap: 15px; text-align: center;">
+                    <div style="background: #F0FDF4; padding: 10px; border-radius: 6px; flex: 1; border: 1px solid #BBF7D0;">
+                        <span style="font-size: 11px; color: #15803D;">Спестени средства</span>
+                        <div style="font-size: 20px; font-weight: 700; color: #166534;">€1,250</div>
+                    </div>
+                    <div style="background: #EFF6FF; padding: 10px; border-radius: 6px; flex: 1; border: 1px solid #BFDBFE;">
+                        <span style="font-size: 11px; color: #1D4ED8;">Прогноза за Юни</span>
+                        <div style="font-size: 20px; font-weight: 700; color: #1E40AF;">+ €450</div>
+                    </div>
                 </div>
             </div>
 
@@ -372,7 +428,7 @@
                     <thead>
                         <tr>
                             <th>Операция / Проект</th>
-                            <th>Тип зашита</th>
+                            <th>Тип защита</th>
                             <th>Статус на софтуера</th>
                         </tr>
                     </thead>
@@ -440,7 +496,6 @@
     <div class="modal" id="authModal">
         <div class="modal-content">
             <span class="close-modal" id="closeModalBtn">&times;</span>
-            
             <div class="success-toast" id="successToast"></div>
             
             <div id="loginFormBlock">
@@ -469,7 +524,6 @@
                     Вече имате профил? <span class="switch-form-link" id="linkToLogin">Влезте оттук</span>
                 </div>
             </div>
-
         </div>
     </div>
 
@@ -500,6 +554,16 @@
         const dashboardSection = document.getElementById('intellectaDashboard');
         const dbUserBadge = document.getElementById('dbUserBadge');
 
+        // Бутони на модулите
+        const modContractBtn = document.getElementById('modContractBtn');
+        const modDbBtn = document.getElementById('modDbBtn');
+        const modFinanceBtn = document.getElementById('modFinanceBtn');
+
+        // Панели на модулите
+        const panelContract = document.getElementById('panelContract');
+        const panelDb = document.getElementById('panelDb');
+        const panelFinance = document.getElementById('panelFinance');
+
         function showLogin() {
             registerBlock.style.display = 'none';
             successToast.style.display = 'none';
@@ -517,33 +581,21 @@
             modal.style.display = 'flex';
         });
 
-        priceBtnStart.addEventListener('click', function() {
-            showRegister();
-            modal.style.display = 'flex';
-        });
-
-        priceBtnBusiness.addEventListener('click', function() {
-            showRegister();
-            modal.style.display = 'flex';
-        });
-
+        priceBtnStart.addEventListener('click', function() { showRegister(); modal.style.display = 'flex'; });
+        priceBtnBusiness.addEventListener('click', function() { showRegister(); modal.style.display = 'flex'; });
         linkToRegister.addEventListener('click', showRegister);
         linkToLogin.addEventListener('click', showLogin);
-
         closeModalBtn.addEventListener('click', function() { modal.style.display = 'none'; });
         window.addEventListener('click', function(e) { if (e.target === modal) modal.style.display = 'none'; });
 
-        // Обработка при вход / регистрация -> ОТКЛЮЧВАНЕ НА ДАШБОРД
+        // Вход / Регистрация -> Отключване
         loginForm.addEventListener('submit', function(e) {
             e.preventDefault();
             loginBlock.style.display = 'none';
             successToast.innerText = "Успешен вход! Стартиране на защитена потребителска сесия...";
             successToast.style.display = 'block';
-            
-            // Задаваме името по подразбиране, ако влиза директно
             dbUserBadge.innerText = "Клиент: КЛИЙН-ХОУМ ЕООД";
-            
-            setTimeout(unlockDashboard, 1800);
+            setTimeout(unlockDashboard, 1500);
         });
 
         registerForm.addEventListener('submit', function(e) {
@@ -552,29 +604,58 @@
             registerBlock.style.display = 'none';
             successToast.innerText = "Регистрацията е успешна! Профилът ви е записан в базата.";
             successToast.style.display = 'block';
-            
-            // Динамично обновяваме логото/името на фирмата в дашборда
             dbUserBadge.innerText = "Клиент: " + companyName;
-            
-            setTimeout(unlockDashboard, 1800);
+            setTimeout(unlockDashboard, 1500);
         });
 
         function unlockDashboard() {
             modal.style.display = 'none';
             successToast.style.display = 'none';
-            
-            // Отключваме визуалния панел
             dashboardSection.style.display = 'block';
-            
-            // Променяме текста на главния бутон горе за статус
             openLoginBtn.innerText = "Активна сесия";
             openLoginBtn.style.backgroundColor = "#10B981";
-            
-            // Плавно скролване до новопоявилия се Дашборд
             dashboardSection.scrollIntoView({ behavior: 'smooth' });
         }
 
-        // Логика за PDF Скенер
+        // --- ЛОГИКА ЗА ИНТЕРАКТИВНИТЕ МОДУЛИ В ДАШБОРДА ---
+        function hideAllPanels() {
+            panelContract.style.display = 'none';
+            panelDb.style.display = 'none';
+            panelFinance.style.display = 'none';
+            
+            modContractBtn.style.backgroundColor = '#FFFFFF';
+            modDbBtn.style.backgroundColor = '#FFFFFF';
+            modFinanceBtn.style.backgroundColor = '#FFFFFF';
+        }
+
+        modContractBtn.addEventListener('click', function() {
+            const isVisible = panelContract.style.display === 'block';
+            hideAllPanels();
+            if (!isVisible) {
+                panelContract.style.display = 'block';
+                modContractBtn.style.backgroundColor = '#F0FDF4';
+            }
+        });
+
+        modDbBtn.addEventListener('click', function() {
+            const isVisible = panelDb.style.display === 'block';
+            hideAllPanels();
+            if (!isVisible) {
+                panelDb.style.display = 'block';
+                modDbBtn.style.backgroundColor = '#EFF6FF';
+            }
+        });
+
+        modFinanceBtn.addEventListener('click', function() {
+            const isVisible = panelFinance.style.display === 'block';
+            hideAllPanels();
+            if (!isVisible) {
+                panelFinance.style.display = 'block';
+                modFinanceBtn.style.backgroundColor = '#FFFBEB';
+            }
+        });
+
+        // PDF Скенер Логика
         const dropzone = document.getElementById('dropzone');
         const fileInput = document.getElementById('fileInput');
         const dropzoneText = document.getElementById('dropzoneText');
@@ -588,29 +669,4 @@
         dropzone.addEventListener('drop', function(e) {
             e.preventDefault();
             dropzone.classList.remove('dragover');
-            if(e.dataTransfer.files.length > 0) handleFile(e.dataTransfer.files[0]);
-        });
-        fileInput.addEventListener('change', function(e) {
-            if(e.target.files.length > 0) handleFile(e.target.files[0]);
-        });
-
-        function handleFile(file) {
-            if (file.type !== "application/pdf") {
-                alert("Моля, качете валиден PDF документ.");
-                return;
-            }
-            dropzoneText.innerText = "Сканиране и AI анализ на документа...";
-            dropzoneSubtext.innerText = "Моля, изчакайте 3 секунди...";
-            resultBox.style.display = 'none';
-
-            setTimeout(function() {
-                dropzoneText.innerText = "Анализът приключи успешно!";
-                dropzoneSubtext.innerText = "Можете да качите нов файл по всяко време.";
-                resFileName.innerText = file.name;
-                resultBox.style.display = 'block';
-                resultBox.scrollIntoView({ behavior: 'smooth' });
-            }, 3000);
-        }
-    </script>
-</body>
-</html>
+            if(e.dataTransfer.files.length > 0) handleFile(e.dataTransfer.files
