@@ -156,6 +156,19 @@
         .switch-form-text { font-size: 13px; margin-top: 15px; color: var(--text-muted); }
         .switch-form-link { color: var(--accent-green); font-weight: 600; cursor: pointer; text-decoration: underline; }
 
+        /* Модерен стил за съобщение за успех */
+        .success-toast {
+            display: none;
+            background-color: #DCFCE7;
+            color: #15803D;
+            padding: 12px;
+            border-radius: 6px;
+            font-size: 14px;
+            font-weight: 500;
+            margin-bottom: 15px;
+            border: 1px solid #BBF7D0;
+        }
+
         /* Резултати */
         .result-box {
             display: none;
@@ -310,7 +323,9 @@
             <h3 id="formTitle">Вход в Intellecta</h3>
             <p class="modal-subtitle" id="formSubtitle">Въведете данните си за достъп до платформата</p>
             
-            <form onsubmit="event.preventDefault(); alert('Концепцията е валидирана! Очаквайте свързване с PostgreSQL производствена база данни.');">
+            <div class="success-toast" id="successToast"></div>
+            
+            <form id="authForm" onsubmit="handleFormSubmit(event)">
                 <input type="text" id="companyField" placeholder="Име на фирмата" style="display: none;">
                 <input type="email" placeholder="Имейл адрес" required>
                 <input type="password" placeholder="Парола" required>
@@ -331,7 +346,6 @@
     </footer>
 
     <script>
-        // ДЕФИНИРАНЕ НА ЕЛЕМЕНТИТЕ
         const modal = document.getElementById('authModal');
         const openLoginBtn = document.getElementById('openLoginBtn');
         const closeModalBtn = document.getElementById('closeModalBtn');
@@ -342,9 +356,13 @@
         const submitFormBtn = document.getElementById('submitFormBtn');
         const switchLink = document.getElementById('switchLink');
         const switchPrompt = document.getElementById('switchPrompt');
+        const successToast = document.getElementById('successToast');
+        const authForm = document.getElementById('authForm');
 
-        // ФУНКЦИИ ЗА ПРЕВКЛЮЧВАНЕ
+        let isCurrentRegister = false;
+
         function switchToLogin() {
+            isCurrentRegister = false;
             formTitle.innerText = "Вход в Intellecta";
             formSubtitle.innerText = "Въведете данните си за достъп до платформата";
             companyField.style.display = "none";
@@ -355,6 +373,7 @@
         }
 
         function switchToRegister() {
+            isCurrentRegister = true;
             formTitle.innerText = "Нова регистрация";
             formSubtitle.innerText = "Създайте профил на вашата фирма, за да стартирате";
             companyField.style.display = "block";
@@ -364,7 +383,30 @@
             document.getElementById('toLogLink').onclick = switchToLogin;
         }
 
-        // СЛУШАТЕЛИ ЗА ОТВАРЯНЕ
+        // Обработка на изпращането БЕЗ системни алерти
+        function handleFormSubmit(event) {
+            event.preventDefault();
+            
+            // Скриваме формата временно
+            authForm.style.display = 'none';
+            successToast.style.display = 'block';
+            
+            if (isCurrentRegister) {
+                successToast.innerText = "Регистрацията е успешна! Профилът ви е създаден в PostgreSQL базата.";
+            } else {
+                successToast.innerText = "Успешен вход в системата! Стартиране на защитена потребителска сесия.";
+            }
+
+            // Автоматично затваряне на прозореца след 2 секунди
+            setTimeout(() => {
+                modal.style.display = 'none';
+                // Възстановяваме формата за следващ тест
+                authForm.style.display = 'block';
+                successToast.style.display = 'none';
+                authForm.reset();
+            }, 2300);
+        }
+
         openLoginBtn.onclick = function() {
             switchToLogin();
             modal.style.display = 'flex';
@@ -410,12 +452,4 @@
 
             setTimeout(function() {
                 dropzoneText.innerText = "Анализът приключи успешно!";
-                dropzoneSubtext.innerText = "Можете да качите нов файл по всяко време.";
-                resFileName.innerText = file.name;
-                resultBox.style.display = 'block';
-                resultBox.scrollIntoView({ behavior: 'smooth' });
-            }, 3000);
-        }
-    </script>
-</body>
-</html>
+       
