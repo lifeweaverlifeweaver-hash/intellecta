@@ -156,7 +156,7 @@
         .switch-form-text { font-size: 13px; margin-top: 15px; color: var(--text-muted); }
         .switch-form-link { color: var(--accent-green); font-weight: 600; cursor: pointer; text-decoration: underline; }
 
-        /* Модерен стил за съобщение за успех */
+        /* Зелен прозорец за успех */
         .success-toast {
             display: none;
             background-color: #DCFCE7;
@@ -304,13 +304,13 @@
                 <div class="price-card">
                     <h4>Start</h4>
                     <div class="price-amount">€29<span style="font-size: 14px; color: var(--text-muted); font-weight: 400;"> / мес</span></div>
-                    <button class="btn" onclick="openWithRegister()">Избери Старт</button>
+                    <button class="btn" id="priceBtnStart">Избери Старт</button>
                 </div>
                 <div class="price-card popular">
                     <div class="price-badge">НАЙ-ПОПУЛЯРЕН</div>
                     <h4>Business</h4>
                     <div class="price-amount">€99<span style="font-size: 14px; color: var(--text-muted); font-weight: 400;"> / мес</span></div>
-                    <button class="btn" style="background-color: var(--accent-green);" onclick="openWithRegister()">Тествай Безплатно</button>
+                    <button class="btn" style="background-color: var(--accent-green);" id="priceBtnBusiness">Тествай Безплатно</button>
                 </div>
             </div>
         </div>
@@ -325,27 +325,27 @@
             <div id="loginFormBlock">
                 <h3>Вход в Intellecta</h3>
                 <p class="modal-subtitle">Въведете данните си за достъп до платформата</p>
-                <form onsubmit="handleFormSubmit(event, 'login')">
+                <form id="loginForm">
                     <input type="email" placeholder="Имейл адрес" required>
                     <input type="password" placeholder="Парола" required>
                     <button type="submit" class="btn" style="width: 100%; margin-top: 10px;">Влез</button>
                 </form>
                 <div class="switch-form-text">
-                    Нямате профил? <span class="switch-form-link" onclick="showRegisterBlock()">Регистрирайте се тук</span>
+                    Нямате профил? <span class="switch-form-link" id="linkToRegister">Регистрирайте се тук</span>
                 </div>
             </div>
 
             <div id="registerFormBlock" style="display: none;">
                 <h3>Нова регистрация</h3>
                 <p class="modal-subtitle">Създайте профил на вашата фирма, за да стартирате</p>
-                <form onsubmit="handleFormSubmit(event, 'register')">
+                <form id="registerForm">
                     <input type="text" placeholder="Име на фирмата" required>
                     <input type="email" placeholder="Имейл адрес" required>
                     <input type="password" placeholder="Парола" required>
                     <button type="submit" class="btn" style="width: 100%; margin-top: 10px;">Създай безплатен акаунт</button>
                 </form>
                 <div class="switch-form-text">
-                    Вече имате профил? <span class="switch-form-link" onclick="showLoginBlock()">Влезте оттук</span>
+                    Вече имате профил? <span class="switch-form-link" id="linkToLogin">Влезте оттук</span>
                 </div>
             </div>
 
@@ -359,6 +359,7 @@
     </footer>
 
     <script>
+        // Инициализиране на елементите
         const modal = document.getElementById('authModal');
         const openLoginBtn = document.getElementById('openLoginBtn');
         const closeModalBtn = document.getElementById('closeModalBtn');
@@ -367,91 +368,18 @@
         const registerBlock = document.getElementById('registerFormBlock');
         const successToast = document.getElementById('successToast');
 
-        function showLoginBlock() {
+        const loginForm = document.getElementById('loginForm');
+        const registerForm = document.getElementById('registerForm');
+
+        const linkToRegister = document.getElementById('linkToRegister');
+        const linkToLogin = document.getElementById('linkToLogin');
+        const priceBtnStart = document.getElementById('priceBtnStart');
+        const priceBtnBusiness = document.getElementById('priceBtnBusiness');
+
+        // Функции за превключване
+        function showLogin() {
+            registerBlock.style.with = 'none';
             registerBlock.style.display = 'none';
             successToast.style.display = 'none';
             loginBlock.style.display = 'block';
         }
-
-        function showRegisterBlock() {
-            loginBlock.style.display = 'none';
-            successToast.style.display = 'none';
-            registerBlock.style.display = 'block';
-        }
-
-        // Изпращане без alert()
-        function handleFormSubmit(event, type) {
-            event.preventDefault();
-            
-            loginBlock.style.display = 'none';
-            registerBlock.style.display = 'none';
-            successToast.style.display = 'block';
-            
-            if (type === 'register') {
-                successToast.innerText = "Регистрацията е успешна! Профилът ви е създаден в PostgreSQL базата.";
-            } else {
-                successToast.innerText = "Успешен вход в системата! Стартиране на защитена потребителска сесия.";
-            }
-
-            setTimeout(() => {
-                modal.style.display = 'none';
-                successToast.style.display = 'none';
-                showLoginBlock(); // Нулираме към вход за следващ тест
-                event.target.reset();
-            }, 2500);
-        }
-
-        openLoginBtn.onclick = function() {
-            showLoginBlock();
-            modal.style.display = 'flex';
-        };
-
-        function openWithRegister() {
-            showRegisterBlock();
-            modal.style.display = 'flex';
-        }
-
-        closeModalBtn.onclick = function() { modal.style.display = 'none'; };
-        window.onclick = function(e) { if(e.target === modal) modal.style.display = 'none'; };
-
-        // ЛОГИКА ЗА PDF СКЕНЕРА
-        const dropzone = document.getElementById('dropzone');
-        const fileInput = document.getElementById('fileInput');
-        const dropzoneText = document.getElementById('dropzoneText');
-        const dropzoneSubtext = document.getElementById('dropzoneSubtext');
-        const resultBox = document.getElementById('resultBox');
-        const resFileName = document.getElementById('resFileName');
-
-        dropzone.onclick = function() { fileInput.click(); };
-        dropzone.ondragover = function(e) { e.preventDefault(); dropzone.classList.add('dragover'); };
-        dropzone.ondragleave = function() { dropzone.classList.remove('dragover'); };
-        dropzone.ondrop = function(e) {
-            e.preventDefault();
-            dropzone.classList.remove('dragover');
-            if(e.dataTransfer.files.length > 0) handleFile(e.dataTransfer.files[0]);
-        };
-        fileInput.onchange = function(e) {
-            if(e.target.files.length > 0) handleFile(e.target.files[0]);
-        };
-
-        function handleFile(file) {
-            if (file.type !== "application/pdf") {
-                alert("Моля, качете валиден PDF документ.");
-                return;
-            }
-            dropzoneText.innerText = "Сканиране и AI анализ на документа...";
-            dropzoneSubtext.innerText = "Моля, изчакайте 3 секунди...";
-            resultBox.style.display = 'none';
-
-            setTimeout(function() {
-                dropzoneText.innerText = "Анализът приключи успешно!";
-                dropzoneSubtext.innerText = "Можете да качите нов файл по всяко време.";
-                resFileName.innerText = file.name;
-                resultBox.style.display = 'block';
-                resultBox.scrollIntoView({ behavior: 'smooth' });
-            }, 3000);
-        }
-    </script>
-</body>
-                        </html>
-    
