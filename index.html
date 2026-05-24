@@ -5,7 +5,6 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Intellecta - Бизнес решения от ново поколение</title>
     <style>
-        /* Базови стилове и шрифтове */
         @import url('https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap');
         
         :root {
@@ -36,7 +35,6 @@
             padding: 0 20px;
         }
 
-        /* Хедър / Навигация */
         header {
             background-color: #FFFFFF;
             border-bottom: 1px solid var(--border-color);
@@ -62,6 +60,8 @@
             font-weight: 500;
             font-size: 14px;
             transition: all 0.2s ease;
+            cursor: pointer;
+            border: none;
         }
 
         .btn:hover {
@@ -69,26 +69,27 @@
             transform: translateY(-1px);
         }
 
-        /* Hero Секция */
         .hero {
             background: linear-gradient(180deg, #FFFFFF 0%, #F1F5F9 100%);
-            padding: 80px 0;
+            padding: 60px 0;
             text-align: center;
         }
 
         .hero h1 {
-            font-size: 42px;
+            font-size: 36px;
             font-weight: 700;
             color: var(--bg-dark);
             margin-bottom: 20px;
             letter-spacing: -1px;
+            line-height: 1.3;
         }
 
         .hero p {
-            font-size: 18px;
+            font-size: 16px;
             color: var(--text-muted);
             max-width: 700px;
             margin: 0 auto 40px auto;
+            padding: 0 10px;
         }
 
         /* Интерактивна Кука (Dropzone) */
@@ -102,11 +103,12 @@
             cursor: pointer;
             transition: all 0.2s ease;
             box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.05);
+            position: relative;
         }
 
-        .interactive-box:hover {
+        .interactive-box.dragover {
             border-color: var(--accent-green);
-            background-color: #F8FAFC;
+            background-color: #F0FDF4;
         }
 
         .interactive-box p {
@@ -121,145 +123,97 @@
             color: var(--text-muted);
         }
 
-        /* Секция Услуги */
-        .services {
-            padding: 80px 0;
+        /* Модален прозорец (Вход) */
+        .modal {
+            display: none;
+            position: fixed;
+            top: 0; left: 0; width: 100%; height: 100%;
+            background: rgba(15, 23, 42, 0.6);
+            backdrop-filter: blur(4px);
+            z-index: 1000;
+            justify-content: center;
+            align-items: center;
         }
 
-        .section-title {
-            text-align: center;
-            font-size: 32px;
-            color: var(--bg-dark);
-            margin-bottom: 50px;
-            font-weight: 700;
-        }
-
-        .grid {
-            display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(320px, 1fr));
-            gap: 30px;
-        }
-
-        .card {
-            background: #FFFFFF;
-            border: 1px solid var(--border-color);
-            border-radius: 10px;
+        .modal-content {
+            background: white;
             padding: 30px;
-            transition: transform 0.2s ease;
-        }
-
-        .card:hover {
-            transform: translateY(-5px);
-            box-shadow: 0 10px 15px -3px rgba(0, 0, 0, 0.05);
-        }
-
-        .card h3 {
-            font-size: 20px;
-            color: var(--bg-dark);
-            margin-bottom: 15px;
-            font-weight: 600;
-        }
-
-        .card p {
-            color: var(--text-muted);
-            font-size: 14px;
-            margin-bottom: 20px;
-        }
-
-        .features-list {
-            list-style: none;
-        }
-
-        .features-list li {
-            font-size: 13px;
-            margin-bottom: 8px;
-            padding-left: 20px;
+            border-radius: 12px;
+            width: 100%;
+            max-width: 400px;
+            box-shadow: 0 20px 25px -5px rgba(0,0,0,0.1);
+            text-align: center;
             position: relative;
-            color: var(--text-main);
         }
 
-        .features-list li::before {
-            content: "✓";
+        .close-modal {
             position: absolute;
-            left: 0;
-            color: var(--accent-green);
-            font-weight: bold;
+            top: 15px; right: 15px;
+            font-size: 20px; cursor: pointer; color: var(--text-muted);
         }
+
+        .modal-content h3 { margin-bottom: 20px; color: var(--bg-dark); }
+        .modal-content input {
+            width: 100%; padding: 12px; margin-bottom: 15px;
+            border: 1px solid var(--border-color); border-radius: 6px;
+            font-size: 14px;
+        }
+
+        /* AI Резултати Екран */
+        .result-box {
+            display: none;
+            background: white;
+            border: 1px solid var(--border-color);
+            border-radius: 12px;
+            max-width: 600px;
+            margin: 30px auto 0 auto;
+            padding: 25px;
+            text-align: left;
+            box-shadow: 0 10px 15px -3px rgba(0,0,0,0.05);
+        }
+
+        .result-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            border-bottom: 1px solid var(--border-color);
+            padding-bottom: 10px;
+            margin-bottom: 15px;
+        }
+
+        .badge-risk {
+            background: #EF4444; color: white;
+            padding: 4px 10px; border-radius: 4px; font-size: 12px; font-weight: 600;
+        }
+
+        /* Секция Услуги */
+        .services { padding: 60px 0; }
+        .section-title { text-align: center; font-size: 28px; color: var(--bg-dark); margin-bottom: 40px; font-weight: 700; }
+        .grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(300px, 1fr)); gap: 25px; }
+        .card { background: #FFFFFF; border: 1px solid var(--border-color); border-radius: 10px; padding: 25px; }
+        .card h3 { font-size: 18px; color: var(--bg-dark); margin-bottom: 12px; }
+        .card p { color: var(--text-muted); font-size: 14px; margin-bottom: 15px; }
+        .features-list { list-style: none; }
+        .features-list li { font-size: 13px; margin-bottom: 6px; padding-left: 20px; position: relative; }
+        .features-list li::before { content: "✓"; position: absolute; left: 0; color: var(--accent-green); font-weight: bold; }
 
         /* Секция Цени */
-        .pricing {
-            background-color: #F8FAFC;
-            padding: 80px 0;
-            border-top: 1px solid var(--border-color);
-        }
+        .pricing { background-color: #F8FAFC; padding: 60px 0; border-top: 1px solid var(--border-color); }
+        .pricing-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(260px, 1fr)); gap: 20px; max-width: 1000px; margin: 0 auto; }
+        .price-card { background: #FFFFFF; border: 1px solid var(--border-color); border-radius: 10px; padding: 25px; text-align: center; position: relative; }
+        .price-card.popular { border-color: var(--accent-green); }
+        .price-badge { position: absolute; top: -12px; left: 50%; transform: translateX(-50%); background-color: var(--accent-green); color: white; font-size: 11px; padding: 3px 12px; border-radius: 20px; font-weight: 600; }
+        .price-amount { font-size: 32px; font-weight: 700; color: var(--bg-dark); margin: 15px 0; }
+        .price-card .btn { display: block; width: 100%; margin-top: 20px; }
 
-        .pricing-grid {
-            display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
-            gap: 25px;
-            max-width: 1000px;
-            margin: 0 auto;
-        }
+        footer { background-color: var(--bg-dark); color: #94A3B8; padding: 30px 0; text-align: center; font-size: 13px; }
 
-        .price-card {
-            background: #FFFFFF;
-            border: 1px solid var(--border-color);
-            border-radius: 10px;
-            padding: 30px;
-            text-align: center;
-            position: relative;
-        }
-
-        .price-card.popular {
-            border-color: var(--accent-green);
-            box-shadow: 0 10px 15px -3px rgba(16, 185, 129, 0.1);
-        }
-
-        .badge {
-            position: absolute;
-            top: -12px;
-            left: 50%;
-            transform: translateX(-50%);
-            background-color: var(--accent-green);
-            color: white;
-            font-size: 11px;
-            padding: 3px 12px;
-            border-radius: 20px;
-            font-weight: 600;
-        }
-
-        .price-amount {
-            font-size: 36px;
-            font-weight: 700;
-            color: var(--bg-dark);
-            margin: 15px 0;
-        }
-
-        .price-card .btn {
-            display: block;
-            width: 100%;
-            margin-top: 20px;
-        }
-
-        /* Футър */
-        footer {
-            background-color: var(--bg-dark);
-            color: #94A3B8;
-            padding: 40px 0;
-            text-align: center;
-            font-size: 14px;
-            border-top: 1px solid #1E293B;
-        }
-
-        /* Специфични стилове за логото и анимацията */
         @keyframes ai-scan {
             0% { opacity: 0.3; transform: translateY(-3px); }
             50% { opacity: 1; transform: translateY(3px); }
             100% { opacity: 0.3; transform: translateY(-3px); }
         }
-        .scanner-line {
-            animation: ai-scan 2.5s infinite ease-in-out;
-        }
+        .scanner-line { animation: ai-scan 2.5s infinite ease-in-out; }
     </style>
 </head>
 <body>
@@ -267,7 +221,7 @@
     <header>
         <div class="container nav-wrapper">
             <a href="/" style="text-decoration: none; display: inline-flex; align-items: center;">
-                <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 420 80" width="190" height="36">
+                <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 420 80" width="170" height="32">
                     <g transform="translate(10, 10)">
                         <path d="M15 10 L35 10 L35 50 L15 50 Z" fill="#1E293B" opacity="0.15" />
                         <path d="M15 10 L35 10 L35 50 L15 50 Z" stroke="#0F172A" stroke-width="3.5" stroke-linejoin="round" fill="none" />
@@ -281,23 +235,39 @@
                     <text x="290" y="43" font-size="14" font-family="'Inter', sans-serif" font-weight="500" fill="#94A3B8" letter-spacing="1px">VERIFIED</text>
                 </svg>
             </a>
-            <a href="#pricing" class="btn">Вход в платформата</a>
+            <button class="btn" id="openLoginBtn">Вход в платформата</button>
         </div>
     </header>
 
     <section class="hero">
         <div class="container">
             <h1>Бизнес решения от ново поколение.<br>Управлявайте с ума на Intellecta.</h1>
-            <p>Пълна дигитална трансформация, автоматизация на документооборота и AI защита срещу правни и финансови рискове. Спестете хиляди часове ръчен труд.</p>
+            <p>Пълна дигитална трансформация, автоматизация на документооборота и AI защита срещу правни и финансови рискове.</p>
             
-            <div class="interactive-box">
-                <svg width="40" height="40" viewBox="0 0 24 24" fill="none" stroke="#64748B" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" style="margin-bottom: 15px;">
+            <div class="interactive-box" id="dropzone">
+                <input type="file" id="fileInput" accept=".pdf" style="display: none;">
+                <svg width="40" height="40" viewBox="0 0 24 24" fill="none" stroke="#64748B" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" style="margin-bottom: 15px;" id="uploadIcon">
                     <path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"></path>
                     <polyline points="17 8 12 3 7 8"></polyline>
                     <line x1="12" y1="3" x2="12" y2="15"></line>
                 </svg>
-                <p>Пуснете тук вашия PDF договор или фактура</p>
-                <span>Без регистрация. Първият анализ е напълно безплатен.</span>
+                <p id="dropzoneText">Пуснете тук вашия PDF договор или фактура</p>
+                <span id="dropzoneSubtext">Или кликнете, за да изберете файл. Първият анализ е безплатен.</span>
+            </div>
+
+            <div class="result-box" id="resultBox">
+                <div class="result-header">
+                    <strong style="color: var(--bg-dark);" id="resFileName">договор_анализиран.pdf</strong>
+                    <span class="badge-risk">High Risk</span>
+                </div>
+                <p style="font-size: 14px; margin-bottom: 10px;"><strong>Резюме на анализа:</strong> Документът беше сканиран успешно от AI ядрото на Intellecta.</p>
+                <ul class="features-list" style="font-size: 13px; color: #E11D48;">
+                    <li style="margin-bottom: 5px;">Внимание: Клауза 4.2 съдържа скрита едностранна неустойка.</li>
+                    <li>Сигнал: Посоченият IBAN не съвпада с предходни транзакции към този партньор.</li>
+                </ul>
+                <div style="margin-top: 15px; font-size: 11px; color: var(--text-muted); border-top: 1px solid var(--border-color); padding-top: 8px; text-align: right;">
+                    Печат за сигурност: <strong>Intellecta Verified</strong>
+                </div>
             </div>
         </div>
     </section>
@@ -306,37 +276,30 @@
         <div class="container">
             <h2 class="section-title">Нашите Интелигентни Услуги</h2>
             <div class="grid">
-                
                 <div class="card">
-                    <h3>1. AI Анализ и Правен Одит на Договори</h3>
-                    <p>Елиминирайте нуждата от дълго и скъпо четене на десетки страници дребен шрифт. Нашият AI сканира и защитава търговските ви интереси.</p>
+                    <h3>1. AI Анализ и Правен Одит</h3>
+                    <p>Елиминирайте нуждата от скъпо четене на десетки страници дребен шрифт. Нашият AI защитава търговските ви интереси.</p>
                     <ul class="features-list">
-                        <li>Детекция на скрити финансови рискове и капани</li>
-                        <li>Превод на сложния правен език на разбираем бизнес език</li>
-                        <li>Готови препоръки за корекция и алтернативни клаузи</li>
+                        <li>Детекция на скрити финансови рискове</li>
+                        <li>Превод на правен език на разбираем бизнес език</li>
                     </ul>
                 </div>
-
                 <div class="card">
-                    <h3>2. Обработка и Верификация на Фактури</h3>
-                    <p>Край на досадното ръчно въвеждане на данни. Пълна автоматизация на финансовия поток без риск от технически или човешки грешки.</p>
+                    <h3>2. Верификация на Фактури</h3>
+                    <p>Край на досадното ръчно въвеждане. Пълна автоматизация на финансовия поток без технически грешки.</p>
                     <ul class="features-list">
-                        <li>Умно OCR разчитане на сканирани документи и снимки</li>
-                        <li>Автоматична защита от измами и подменени IBAN номера</li>
-                        <li>Директен експорт към водещите счетоводни системи</li>
+                        <li>Умно OCR разчитане на сканирани PDF файлове</li>
+                        <li>Автоматична защита от измами и подменени IBAN</li>
                     </ul>
                 </div>
-
                 <div class="card">
-                    <h3>3. AI Оптимизация на Разходите (FinOps)</h3>
-                    <p>Превърнете хаоса от фактури в ценен стратегически актив. AI анализира разходите ви и открива къде точно изтичат средства.</p>
+                    <h3>3. AI Оптимизация на Разходите</h3>
+                    <p>Превърнете хаоса от фактури в ценен актив. AI анализира разходите ви и открива спестявания в Евро (€).</p>
                     <ul class="features-list">
-                        <li>Денонощен мониторинг за финансови аномалии</li>
+                        <li>Денонощен мониторинг за аномалии</li>
                         <li>Засичане на дублирани или неактивни абонаменти</li>
-                        <li>Автоматични седмични репорти за спестявания в Евро (€)</li>
                     </ul>
                 </div>
-
             </div>
         </div>
     </section>
@@ -345,47 +308,40 @@
         <div class="container">
             <h2 class="section-title">Гъвкави планове за всеки бизнес</h2>
             <div class="pricing-grid">
-                
                 <div class="price-card">
                     <h4>Start</h4>
                     <div class="price-amount">€29<span style="font-size: 14px; color: var(--text-muted); font-weight: 400;"> / мес</span></div>
-                    <p>Подходящ за фрийлансъри и малки фирми.</p>
                     <ul class="features-list" style="text-align: left; margin-top: 20px;">
                         <li>До 50 сканирани документа / месец</li>
                         <li>Базов AI анализ на фактури</li>
-                        <li>Поддръжка по имейл</li>
                     </ul>
-                    <a href="#" class="btn">Избери Старт</a>
+                    <button class="btn open-register">Избери Старт</button>
                 </div>
-
                 <div class="price-card popular">
-                    <div class="badge">НАЙ-ПОПУЛЯРЕН</div>
+                    <div class="price-badge">НАЙ-ПОПУЛЯРЕН</div>
                     <h4>Business</h4>
                     <div class="price-amount">€99<span style="font-size: 14px; color: var(--text-muted); font-weight: 400;"> / мес</span></div>
-                    <p>За развиващи се компании с активен документооборот.</p>
                     <ul class="features-list" style="text-align: left; margin-top: 20px;">
                         <li>До 300 сканирани документа / месец</li>
                         <li>Пълен одит на договори и рискове</li>
-                        <li>Експорт към счетоводен софтуер</li>
                     </ul>
-                    <a href="#" class="btn" style="background-color: var(--accent-green);">Тествай Безплатно</a>
+                    <button class="btn open-register" style="background-color: var(--accent-green);">Тествай Безплатно</button>
                 </div>
-
-                <div class="price-card">
-                    <h4>Enterprise</h4>
-                    <div class="price-amount">€299<span style="font-size: 14px; color: var(--text-muted); font-weight: 400;"> / мес</span></div>
-                    <p>За мащабни корпорации и счетоводни кантори.</p>
-                    <ul class="features-list" style="text-align: left; margin-top: 20px;">
-                        <li>Неограничен брой документи и анализи</li>
-                        <li>Персонализиран AI модел за вашата ниша</li>
-                        <li>24/7 приоритетна поддръжка и API интеграция</li>
-                    </ul>
-                    <a href="#" class="btn">Свържи се с нас</a>
-                </div>
-
             </div>
         </div>
     </section>
+
+    <div class="modal" id="loginModal">
+        <div class="modal-content">
+            <span class="close-modal" id="closeModalBtn">&times;</span>
+            <h3 id="modalTitle">Вход в Intellecta</h3>
+            <form id="loginForm" onsubmit="event.preventDefault(); alert('Внедряване на база данни: Очаквайте свързване на PostgreSQL сесия.');">
+                <input type="email" placeholder="Имейл адрес" required>
+                <input type="password" placeholder="Парола" required>
+                <button type="submit" class="btn" style="width: 100%;">Продължи</button>
+            </form>
+        </div>
+    </div>
 
     <footer>
         <div class="container">
@@ -393,5 +349,75 @@
         </div>
     </footer>
 
+    <script>
+        // Логика за Модалния прозорец (Вход)
+        const modal = document.getElementById('loginModal');
+        const openBtn = document.getElementById('openLoginBtn');
+        const closeBtn = document.getElementById('closeModalBtn');
+        const regButtons = document.querySelectorAll('.open-register');
+
+        openBtn.addEventListener('click', () => {
+            document.getElementById('modalTitle').innerText = "Вход в Intellecta";
+            modal.style.display = 'flex';
+        });
+
+        regButtons.forEach(btn => {
+            btn.addEventListener('click', () => {
+                document.getElementById('modalTitle').innerText = "Създаване на безплатен профил";
+                modal.style.display = 'flex';
+            });
+        });
+
+        closeBtn.addEventListener('click', () => modal.style.display = 'none');
+        window.addEventListener('click', (e) => { if(e.target === modal) modal.style.display = 'none'; });
+
+        // Логика за Драг-енд-дроп PDF скенера
+        const dropzone = document.getElementById('dropzone');
+        const fileInput = document.getElementById('fileInput');
+        const dropzoneText = document.getElementById('dropzoneText');
+        const dropzoneSubtext = document.getElementById('dropzoneSubtext');
+        const resultBox = document.getElementById('resultBox');
+        const resFileName = document.getElementById('resFileName');
+
+        dropzone.addEventListener('click', () => fileInput.click());
+
+        dropzone.addEventListener('dragover', (e) => {
+            e.preventDefault();
+            dropzone.classList.add('dragover');
+        });
+
+        dropzone.addEventListener('dragleave', () => dropzone.classList.remove('dragover'));
+
+        dropzone.addEventListener('drop', (e) => {
+            e.preventDefault();
+            dropzone.classList.remove('dragover');
+            const files = e.dataTransfer.files;
+            if(files.length > 0) handleFile(files[0]);
+        });
+
+        fileInput.addEventListener('change', (e) => {
+            if(e.target.files.length > 0) handleFile(e.target.files[0]);
+        });
+
+        function handleFile(file) {
+            if (file.type !== "application/pdf") {
+                alert("Моля, качете валиден PDF документ.");
+                return;
+            }
+            
+            // Визуална симулация на AI процес
+            dropzoneText.innerText = "Сканиране и AI анализ на документа...";
+            dropzoneSubtext.innerText = "Моля, изчакайте 3 секунди...";
+            resultBox.style.display = 'none';
+
+            setTimeout(() => {
+                dropzoneText.innerText = "Анализът приключи успешно!";
+                dropzoneSubtext.innerText = "Можете да качите нов файл по всяко време.";
+                resFileName.innerText = file.name;
+                resultBox.style.display = 'block';
+                resultBox.scrollIntoView({ behavior: 'smooth' });
+            }, 3000);
+        }
+    </script>
 </body>
 </html>
