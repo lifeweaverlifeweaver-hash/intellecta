@@ -15,11 +15,7 @@
             --border-color: #E2E8F0;
         }
 
-        * {
-            box-sizing: border-box;
-            margin: 0;
-            padding: 0;
-        }
+        * { box-sizing: border-box; margin: 0; padding: 0; }
 
         body {
             font-family: 'Inter', sans-serif;
@@ -89,10 +85,9 @@
             color: var(--text-muted);
             max-width: 700px;
             margin: 0 auto 40px auto;
-            padding: 0 10px;
         }
 
-        /* Dropzone за PDF */
+        /* Dropzone */
         .interactive-box {
             background: #FFFFFF;
             border: 2px dashed #CBD5E1;
@@ -103,7 +98,6 @@
             cursor: pointer;
             transition: all 0.2s ease;
             box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.05);
-            position: relative;
         }
 
         .interactive-box.dragover {
@@ -118,12 +112,9 @@
             font-weight: 500;
         }
 
-        .interactive-box span {
-            font-size: 13px;
-            color: var(--text-muted);
-        }
+        .interactive-box span { font-size: 13px; color: var(--text-muted); }
 
-        /* Интерактивен Модален прозорец (Вход и Регистрация) */
+        /* Модален прозорец */
         .modal {
             display: none;
             position: fixed;
@@ -149,7 +140,8 @@
         .close-modal {
             position: absolute;
             top: 15px; right: 15px;
-            font-size: 20px; cursor: pointer; color: var(--text-muted);
+            font-size: 24px; cursor: pointer; color: var(--text-muted);
+            line-height: 1;
         }
 
         .modal-content h3 { margin-bottom: 10px; color: var(--bg-dark); }
@@ -161,15 +153,10 @@
             font-size: 14px;
         }
 
-        .switch-form-text {
-            font-size: 13px; margin-top: 15px; color: var(--text-muted);
-        }
-        
-        .switch-form-link {
-            color: var(--accent-green); font-weight: 600; cursor: pointer; text-decoration: underline;
-        }
+        .switch-form-text { font-size: 13px; margin-top: 15px; color: var(--text-muted); }
+        .switch-form-link { color: var(--accent-green); font-weight: 600; cursor: pointer; text-decoration: underline; }
 
-        /* AI Резултати */
+        /* Резултати */
         .result-box {
             display: none;
             background: white;
@@ -191,10 +178,7 @@
             margin-bottom: 15px;
         }
 
-        .badge-risk {
-            background: #EF4444; color: white;
-            padding: 4px 10px; border-radius: 4px; font-size: 12px; font-weight: 600;
-        }
+        .badge-risk { background: #EF4444; color: white; padding: 4px 10px; border-radius: 4px; font-size: 12px; font-weight: 600; }
 
         .services { padding: 60px 0; }
         .section-title { text-align: center; font-size: 28px; color: var(--bg-dark); margin-bottom: 40px; font-weight: 700; }
@@ -254,7 +238,7 @@
             
             <div class="interactive-box" id="dropzone">
                 <input type="file" id="fileInput" accept=".pdf" style="display: none;">
-                <svg width="40" height="40" viewBox="0 0 24 24" fill="none" stroke="#64748B" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" style="margin-bottom: 15px;" id="uploadIcon">
+                <svg width="40" height="40" viewBox="0 0 24 24" fill="none" stroke="#64748B" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" style="margin-bottom: 15px;">
                     <path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"></path>
                     <polyline points="17 8 12 3 7 8"></polyline>
                     <line x1="12" y1="3" x2="12" y2="15"></line>
@@ -269,7 +253,7 @@
                     <span class="badge-risk">High Risk</span>
                 </div>
                 <p style="font-size: 14px; margin-bottom: 10px;"><strong>Резюме на анализа:</strong> Документът беше сканиран успешно от AI ядрото на Intellecta.</p>
-                <ul class="features-list" style="font-size: 13px; color: #E11D48;">
+                <ul class="features-list" style="font-size: 13px; color: #E11D48; text-align: left; max-width: 500px; margin: 0 auto;">
                     <li style="margin-bottom: 5px;">Внимание: Клауза 4.2 съдържа скрита едностранна неустойка.</li>
                     <li>Сигнал: Посоченият IBAN не съвпада с предходни транзакции към този партньор.</li>
                 </ul>
@@ -307,13 +291,13 @@
                 <div class="price-card">
                     <h4>Start</h4>
                     <div class="price-amount">€29<span style="font-size: 14px; color: var(--text-muted); font-weight: 400;"> / мес</span></div>
-                    <button class="btn open-register-trigger">Избери Старт</button>
+                    <button class="btn" onclick="openWithRegister()">Избери Старт</button>
                 </div>
                 <div class="price-card popular">
                     <div class="price-badge">НАЙ-ПОПУЛЯРЕН</div>
                     <h4>Business</h4>
                     <div class="price-amount">€99<span style="font-size: 14px; color: var(--text-muted); font-weight: 400;"> / мес</span></div>
-                    <button class="btn open-register-trigger" style="background-color: var(--accent-green);">Тествай Безплатно</button>
+                    <button class="btn" style="background-color: var(--accent-green);" onclick="openWithRegister()">Тествай Безплатно</button>
                 </div>
             </div>
         </div>
@@ -323,22 +307,19 @@
         <div class="modal-content">
             <span class="close-modal" id="closeModalBtn">&times;</span>
             
-            <div id="authFormWrapper">
-                <h3 id="formTitle">Вход в Intellecta</h3>
-                <p class="modal-subtitle" id="formSubtitle">Въведете данните си за достъп до платформата</p>
+            <h3 id="formTitle">Вход в Intellecta</h3>
+            <p class="modal-subtitle" id="formSubtitle">Въведете данните си за достъп до платформата</p>
+            
+            <form onsubmit="event.preventDefault(); alert('Концепцията е валидирана! Очаквайте свързване с PostgreSQL производствена база данни.');">
+                <input type="text" id="companyField" placeholder="Име на фирмата" style="display: none;">
+                <input type="email" placeholder="Имейл адрес" required>
+                <input type="password" placeholder="Парола" required>
                 
-                <form id="universalForm" onsubmit="event.preventDefault(); alert('Внедряване на база данни: Симулацията е успешна. Очаквайте свързване на PostgreSQL сесия.');">
-                    <input type="text" id="companyField" placeholder="Име на фирмата" style="display: none;">
-                    
-                    <input type="email" id="emailField" placeholder="Имейл адрес" required>
-                    <input type="password" id="passwordField" placeholder="Парола" required>
-                    
-                    <button type="submit" class="btn" style="width: 100%; margin-top: 10px;" id="submitFormBtn">Влез</button>
-                </form>
-                
-                <div class="switch-form-text" id="switchPrompt">
-                    Нямате профил? <span class="switch-form-link" id="switchToRegister">Регистрирайте се тук</span>
-                </div>
+                <button type="submit" class="btn" style="width: 100%; margin-top: 10px;" id="submitFormBtn">Влез</button>
+            </form>
+            
+            <div class="switch-form-text" id="switchPrompt">
+                Нямате профил? <span class="switch-form-link" id="switchLink">Регистрирайте се тук</span>
             </div>
         </div>
     </div>
@@ -350,57 +331,53 @@
     </footer>
 
     <script>
-        // ИНТЕРФЕЙСНА ЛОГИКА ЗА ВХОД / РЕГИСТРАЦИЯ
+        // ДЕФИНИРАНЕ НА ЕЛЕМЕНТИТЕ
         const modal = document.getElementById('authModal');
         const openLoginBtn = document.getElementById('openLoginBtn');
-        const pricingRegButtons = document.querySelectorAll('.open-register-trigger');
         const closeModalBtn = document.getElementById('closeModalBtn');
         
         const formTitle = document.getElementById('formTitle');
         const formSubtitle = document.getElementById('formSubtitle');
         const companyField = document.getElementById('companyField');
         const submitFormBtn = document.getElementById('submitFormBtn');
+        const switchLink = document.getElementById('switchLink');
         const switchPrompt = document.getElementById('switchPrompt');
-        
-        let isCurrentRegister = false;
 
-        function showLoginForm() {
-            isCurrentRegister = false;
+        // ФУНКЦИИ ЗА ПРЕВКЛЮЧВАНЕ
+        function switchToLogin() {
             formTitle.innerText = "Вход в Intellecta";
             formSubtitle.innerText = "Въведете данните си за достъп до платформата";
             companyField.style.display = "none";
             companyField.removeAttribute("required");
             submitFormBtn.innerText = "Влез";
-            switchPrompt.innerHTML = 'Нямате профил? <span class="switch-form-link" onclick="showRegisterForm()">Регистрирайте се тук</span>';
+            switchPrompt.innerHTML = 'Нямате профил? <span class="switch-form-link" id="toRegLink">Регистрирайте се тук</span>';
+            document.getElementById('toRegLink').onclick = switchToRegister;
         }
 
-        function showRegisterForm() {
-            isCurrentRegister = true;
+        function switchToRegister() {
             formTitle.innerText = "Нова регистрация";
             formSubtitle.innerText = "Създайте профил на вашата фирма, за да стартирате";
             companyField.style.display = "block";
             companyField.setAttribute("required", "true");
             submitFormBtn.innerText = "Създай безплатен акаунт";
-            switchPrompt.innerHTML = 'Вече имате профил? <span class="switch-form-link" onclick="showLoginForm()">Влезте оттук</span>';
+            switchPrompt.innerHTML = 'Вече имате профил? <span class="switch-form-link" id="toLogLink">Влезте оттук</span>';
+            document.getElementById('toLogLink').onclick = switchToLogin;
         }
 
-        openLoginBtn.addEventListener('click', () => {
-            showLoginForm();
+        // СЛУШАТЕЛИ ЗА ОТВАРЯНЕ
+        openLoginBtn.onclick = function() {
+            switchToLogin();
             modal.style.display = 'flex';
-        });
+        };
 
-        pricingRegButtons.forEach(btn => {
-            btn.addEventListener('click', () => {
-                showRegisterForm();
-                modal.style.display = 'flex';
-            });
-        });
+        function openWithRegister() {
+            switchToRegister();
+            modal.style.display = 'flex';
+        }
 
-        // Слушател за линка под формата (първоначалния)
-        document.getElementById('switchToRegister').addEventListener('click', showRegisterForm);
-
-        closeModalBtn.addEventListener('click', () => modal.style.display = 'none');
-        window.addEventListener('click', (e) => { if(e.target === modal) modal.style.display = 'none'; });
+        switchLink.onclick = switchToRegister;
+        closeModalBtn.onclick = function() { modal.style.display = 'none'; };
+        window.onclick = function(e) { if(e.target === modal) modal.style.display = 'none'; };
 
         // ЛОГИКА ЗА PDF СКЕНЕРА
         const dropzone = document.getElementById('dropzone');
@@ -410,7 +387,35 @@
         const resultBox = document.getElementById('resultBox');
         const resFileName = document.getElementById('resFileName');
 
-        dropzone.addEventListener('click', () => fileInput.click());
-        dropzone.addEventListener('dragover', (e) => { e.preventDefault(); dropzone.classList.add('dragover'); });
-        dropzone.addEventListener('
-        
+        dropzone.onclick = function() { fileInput.click(); };
+        dropzone.ondragover = function(e) { e.preventDefault(); dropzone.classList.add('dragover'); };
+        dropzone.ondragleave = function() { dropzone.classList.remove('dragover'); };
+        dropzone.ondrop = function(e) {
+            e.preventDefault();
+            dropzone.classList.remove('dragover');
+            if(e.dataTransfer.files.length > 0) handleFile(e.dataTransfer.files[0]);
+        };
+        fileInput.onchange = function(e) {
+            if(e.target.files.length > 0) handleFile(e.target.files[0]);
+        };
+
+        function handleFile(file) {
+            if (file.type !== "application/pdf") {
+                alert("Моля, качете валиден PDF документ.");
+                return;
+            }
+            dropzoneText.innerText = "Сканиране и AI анализ на документа...";
+            dropzoneSubtext.innerText = "Моля, изчакайте 3 секунди...";
+            resultBox.style.display = 'none';
+
+            setTimeout(function() {
+                dropzoneText.innerText = "Анализът приключи успешно!";
+                dropzoneSubtext.innerText = "Можете да качите нов файл по всяко време.";
+                resFileName.innerText = file.name;
+                resultBox.style.display = 'block';
+                resultBox.scrollIntoView({ behavior: 'smooth' });
+            }, 3000);
+        }
+    </script>
+</body>
+</html>
