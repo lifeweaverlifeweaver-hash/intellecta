@@ -1,0 +1,397 @@
+<!DOCTYPE html>
+<html lang="bg">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Intellecta - Бизнес решения от ново поколение</title>
+    <style>
+        /* Базови стилове и шрифтове */
+        @import url('https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap');
+        
+        :root {
+            --bg-dark: #0F172A;
+            --text-main: #1E293B;
+            --text-muted: #64748B;
+            --accent-green: #10B981;
+            --border-color: #E2E8F0;
+        }
+
+        * {
+            box-sizing: border-box;
+            margin: 0;
+            padding: 0;
+        }
+
+        body {
+            font-family: 'Inter', sans-serif;
+            color: var(--text-main);
+            background-color: #FAFAFA;
+            line-height: 1.6;
+        }
+
+        .container {
+            width: 100%;
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 0 20px;
+        }
+
+        /* Хедър / Навигация */
+        header {
+            background-color: #FFFFFF;
+            border-bottom: 1px solid var(--border-color);
+            padding: 15px 0;
+            position: sticky;
+            top: 0;
+            z-index: 100;
+        }
+
+        .nav-wrapper {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .btn {
+            display: inline-block;
+            background-color: var(--bg-dark);
+            color: #FFFFFF;
+            padding: 10px 22px;
+            border-radius: 6px;
+            text-decoration: none;
+            font-weight: 500;
+            font-size: 14px;
+            transition: all 0.2s ease;
+        }
+
+        .btn:hover {
+            background-color: #1E293B;
+            transform: translateY(-1px);
+        }
+
+        /* Hero Секция */
+        .hero {
+            background: linear-gradient(180deg, #FFFFFF 0%, #F1F5F9 100%);
+            padding: 80px 0;
+            text-align: center;
+        }
+
+        .hero h1 {
+            font-size: 42px;
+            font-weight: 700;
+            color: var(--bg-dark);
+            margin-bottom: 20px;
+            letter-spacing: -1px;
+        }
+
+        .hero p {
+            font-size: 18px;
+            color: var(--text-muted);
+            max-width: 700px;
+            margin: 0 auto 40px auto;
+        }
+
+        /* Интерактивна Кука (Dropzone) */
+        .interactive-box {
+            background: #FFFFFF;
+            border: 2px dashed #CBD5E1;
+            border-radius: 12px;
+            max-width: 600px;
+            margin: 0 auto;
+            padding: 40px 20px;
+            cursor: pointer;
+            transition: all 0.2s ease;
+            box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.05);
+        }
+
+        .interactive-box:hover {
+            border-color: var(--accent-green);
+            background-color: #F8FAFC;
+        }
+
+        .interactive-box p {
+            font-size: 15px;
+            color: var(--text-main);
+            margin-bottom: 5px;
+            font-weight: 500;
+        }
+
+        .interactive-box span {
+            font-size: 13px;
+            color: var(--text-muted);
+        }
+
+        /* Секция Услуги */
+        .services {
+            padding: 80px 0;
+        }
+
+        .section-title {
+            text-align: center;
+            font-size: 32px;
+            color: var(--bg-dark);
+            margin-bottom: 50px;
+            font-weight: 700;
+        }
+
+        .grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(320px, 1fr));
+            gap: 30px;
+        }
+
+        .card {
+            background: #FFFFFF;
+            border: 1px solid var(--border-color);
+            border-radius: 10px;
+            padding: 30px;
+            transition: transform 0.2s ease;
+        }
+
+        .card:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 10px 15px -3px rgba(0, 0, 0, 0.05);
+        }
+
+        .card h3 {
+            font-size: 20px;
+            color: var(--bg-dark);
+            margin-bottom: 15px;
+            font-weight: 600;
+        }
+
+        .card p {
+            color: var(--text-muted);
+            font-size: 14px;
+            margin-bottom: 20px;
+        }
+
+        .features-list {
+            list-style: none;
+        }
+
+        .features-list li {
+            font-size: 13px;
+            margin-bottom: 8px;
+            padding-left: 20px;
+            position: relative;
+            color: var(--text-main);
+        }
+
+        .features-list li::before {
+            content: "✓";
+            position: absolute;
+            left: 0;
+            color: var(--accent-green);
+            font-weight: bold;
+        }
+
+        /* Секция Цени */
+        .pricing {
+            background-color: #F8FAFC;
+            padding: 80px 0;
+            border-top: 1px solid var(--border-color);
+        }
+
+        .pricing-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+            gap: 25px;
+            max-width: 1000px;
+            margin: 0 auto;
+        }
+
+        .price-card {
+            background: #FFFFFF;
+            border: 1px solid var(--border-color);
+            border-radius: 10px;
+            padding: 30px;
+            text-align: center;
+            position: relative;
+        }
+
+        .price-card.popular {
+            border-color: var(--accent-green);
+            box-shadow: 0 10px 15px -3px rgba(16, 185, 129, 0.1);
+        }
+
+        .badge {
+            position: absolute;
+            top: -12px;
+            left: 50%;
+            transform: translateX(-50%);
+            background-color: var(--accent-green);
+            color: white;
+            font-size: 11px;
+            padding: 3px 12px;
+            border-radius: 20px;
+            font-weight: 600;
+        }
+
+        .price-amount {
+            font-size: 36px;
+            font-weight: 700;
+            color: var(--bg-dark);
+            margin: 15px 0;
+        }
+
+        .price-card .btn {
+            display: block;
+            width: 100%;
+            margin-top: 20px;
+        }
+
+        /* Футър */
+        footer {
+            background-color: var(--bg-dark);
+            color: #94A3B8;
+            padding: 40px 0;
+            text-align: center;
+            font-size: 14px;
+            border-top: 1px solid #1E293B;
+        }
+
+        /* Специфични стилове за логото и анимацията */
+        @keyframes ai-scan {
+            0% { opacity: 0.3; transform: translateY(-3px); }
+            50% { opacity: 1; transform: translateY(3px); }
+            100% { opacity: 0.3; transform: translateY(-3px); }
+        }
+        .scanner-line {
+            animation: ai-scan 2.5s infinite ease-in-out;
+        }
+    </style>
+</head>
+<body>
+
+    <header>
+        <div class="container nav-wrapper">
+            <a href="/" style="text-decoration: none; display: inline-flex; align-items: center;">
+                <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 420 80" width="190" height="36">
+                    <g transform="translate(10, 10)">
+                        <path d="M15 10 L35 10 L35 50 L15 50 Z" fill="#1E293B" opacity="0.15" />
+                        <path d="M15 10 L35 10 L35 50 L15 50 Z" stroke="#0F172A" stroke-width="3.5" stroke-linejoin="round" fill="none" />
+                        <path d="M35 18 L50 25 L50 50 L35 50" stroke="#0F172A" stroke-width="3.5" stroke-linejoin="round" fill="none" />
+                        <line x1="25" y1="20" x2="25" y2="40" stroke="#0F172A" stroke-width="4" stroke-linecap="round" />
+                        <line x1="10" y1="30" x2="55" y2="30" stroke="#10B981" stroke-width="3" stroke-linecap="round" class="scanner-line" style="filter: drop-shadow(0px 0px 4px #10B981);" />
+                        <circle cx="25" cy="13" r="3.5" fill="#10B981" />
+                    </g>
+                    <text x="85" y="46" font-size="34" font-family="'Inter', sans-serif" font-weight="700" fill="#0F172A">intellecta</text>
+                    <line x1="275" y1="24" x2="275" y2="52" stroke="#CBD5E1" stroke-width="1.5" />
+                    <text x="290" y="43" font-size="14" font-family="'Inter', sans-serif" font-weight="500" fill="#94A3B8" letter-spacing="1px">VERIFIED</text>
+                </svg>
+            </a>
+            <a href="#pricing" class="btn">Вход в платформата</a>
+        </div>
+    </header>
+
+    <section class="hero">
+        <div class="container">
+            <h1>Бизнес решения от ново поколение.<br>Управлявайте с ума на Intellecta.</h1>
+            <p>Пълна дигитална трансформация, автоматизация на документооборота и AI защита срещу правни и финансови рискове. Спестете хиляди часове ръчен труд.</p>
+            
+            <div class="interactive-box">
+                <svg width="40" height="40" viewBox="0 0 24 24" fill="none" stroke="#64748B" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" style="margin-bottom: 15px;">
+                    <path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"></path>
+                    <polyline points="17 8 12 3 7 8"></polyline>
+                    <line x1="12" y1="3" x2="12" y2="15"></line>
+                </svg>
+                <p>Пуснете тук вашия PDF договор или фактура</p>
+                <span>Без регистрация. Първият анализ е напълно безплатен.</span>
+            </div>
+        </div>
+    </section>
+
+    <section class="services">
+        <div class="container">
+            <h2 class="section-title">Нашите Интелигентни Услуги</h2>
+            <div class="grid">
+                
+                <div class="card">
+                    <h3>1. AI Анализ и Правен Одит на Договори</h3>
+                    <p>Елиминирайте нуждата от дълго и скъпо четене на десетки страници дребен шрифт. Нашият AI сканира и защитава търговските ви интереси.</p>
+                    <ul class="features-list">
+                        <li>Детекция на скрити финансови рискове и капани</li>
+                        <li>Превод на сложния правен език на разбираем бизнес език</li>
+                        <li>Готови препоръки за корекция и алтернативни клаузи</li>
+                    </ul>
+                </div>
+
+                <div class="card">
+                    <h3>2. Обработка и Верификация на Фактури</h3>
+                    <p>Край на досадното ръчно въвеждане на данни. Пълна автоматизация на финансовия поток без риск от технически или човешки грешки.</p>
+                    <ul class="features-list">
+                        <li>Умно OCR разчитане на сканирани документи и снимки</li>
+                        <li>Автоматична защита от измами и подменени IBAN номера</li>
+                        <li>Директен експорт към водещите счетоводни системи</li>
+                    </ul>
+                </div>
+
+                <div class="card">
+                    <h3>3. AI Оптимизация на Разходите (FinOps)</h3>
+                    <p>Превърнете хаоса от фактури в ценен стратегически актив. AI анализира разходите ви и открива къде точно изтичат средства.</p>
+                    <ul class="features-list">
+                        <li>Денонощен мониторинг за финансови аномалии</li>
+                        <li>Засичане на дублирани или неактивни абонаменти</li>
+                        <li>Автоматични седмични репорти за спестявания в Евро (€)</li>
+                    </ul>
+                </div>
+
+            </div>
+        </div>
+    </section>
+
+    <section class="pricing" id="pricing">
+        <div class="container">
+            <h2 class="section-title">Гъвкави планове за всеки бизнес</h2>
+            <div class="pricing-grid">
+                
+                <div class="price-card">
+                    <h4>Start</h4>
+                    <div class="price-amount">€29<span style="font-size: 14px; color: var(--text-muted); font-weight: 400;"> / мес</span></div>
+                    <p>Подходящ за фрийлансъри и малки фирми.</p>
+                    <ul class="features-list" style="text-align: left; margin-top: 20px;">
+                        <li>До 50 сканирани документа / месец</li>
+                        <li>Базов AI анализ на фактури</li>
+                        <li>Поддръжка по имейл</li>
+                    </ul>
+                    <a href="#" class="btn">Избери Старт</a>
+                </div>
+
+                <div class="price-card popular">
+                    <div class="badge">НАЙ-ПОПУЛЯРЕН</div>
+                    <h4>Business</h4>
+                    <div class="price-amount">€99<span style="font-size: 14px; color: var(--text-muted); font-weight: 400;"> / мес</span></div>
+                    <p>За развиващи се компании с активен документооборот.</p>
+                    <ul class="features-list" style="text-align: left; margin-top: 20px;">
+                        <li>До 300 сканирани документа / месец</li>
+                        <li>Пълен одит на договори и рискове</li>
+                        <li>Експорт към счетоводен софтуер</li>
+                    </ul>
+                    <a href="#" class="btn" style="background-color: var(--accent-green);">Тествай Безплатно</a>
+                </div>
+
+                <div class="price-card">
+                    <h4>Enterprise</h4>
+                    <div class="price-amount">€299<span style="font-size: 14px; color: var(--text-muted); font-weight: 400;"> / мес</span></div>
+                    <p>За мащабни корпорации и счетоводни кантори.</p>
+                    <ul class="features-list" style="text-align: left; margin-top: 20px;">
+                        <li>Неограничен брой документи и анализи</li>
+                        <li>Персонализиран AI модел за вашата ниша</li>
+                        <li>24/7 приоритетна поддръжка и API интеграция</li>
+                    </ul>
+                    <a href="#" class="btn">Свържи се с нас</a>
+                </div>
+
+            </div>
+        </div>
+    </section>
+
+    <footer>
+        <div class="container">
+            <p>&copy; 2026 Intellecta. Всички права запазени. Сигурност и автоматизация на най-високо ниво.</p>
+        </div>
+    </footer>
+
+</body>
+</html>
